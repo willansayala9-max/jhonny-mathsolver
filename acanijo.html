@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión Escolar - José Clemente Maurer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --azul-primario: #0d47a1;
+            --azul-oscuro: #0a3680;
+            --azul-claro: #e3f2fd;
+            --blanco: #ffffff;
+            --gris-fondo: #f5f7fa;
+            --texto-oscuro: #333333;
+            --texto-mutado: #666666;
+            --borde: #e0e0e0;
+            --naranja-iniciales: #ff9800;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--gris-fondo);
+            color: var(--texto-oscuro);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- ENCABEZADO Y MENÚ HORIZONTAL --- */
+        header {
+            background-color: var(--azul-primario);
+            color: var(--blanco);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-top {
+            padding: 20px;
+            text-align: left;
+            font-size: 1.6rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Círculo pequeño anaranjado para las iniciales */
+        .avatar-iniciales {
+            background-color: var(--naranja-iniciales);
+            color: var(--blanco);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .nav-bar {
+            display: flex;
+            list-style: none;
+            padding: 0 10px;
+            background-color: var(--azul-oscuro);
+            overflow-x: auto;
+        }
+
+        .nav-bar li {
+            display: inline-block;
+        }
+
+        .nav-bar a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-bar a:hover, .nav-bar a.active {
+            color: var(--blanco);
+            background-color: var(--azul-primario);
+        }
+
+        /* --- CONTENEDOR DE VISTAS --- */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            max-width: 1300px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Ocultar secciones por defecto */
+        .view-section {
+            display: none;
+        }
+
+        /* Mostrar sección activa */
+        .view-section.active-view {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- COMPONENTES COMUNES --- */
+        .welcome-banner {
+            background: linear-gradient(135deg, var(--azul-primario) 0%, var(--azul-oscuro) 100%);
+            color: var(--blanco);
+            padding: 40px 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(13, 71, 161, 0.15);
+            text-align: center;
+        }
+
+        .welcome-banner .banner-icon {
+            font-size: 3rem;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .welcome-banner h1 { 
+            font-size: 2.4rem;
+            margin-bottom: 12px; 
+            font-weight: 700;
+        }
+        
+        .welcome-banner p { 
+            color: var(--azul-claro); 
+            font-size: 0.95rem;
+            line-height: 1.6;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background-color: var(--blanco);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            border-left: 5px solid var(--azul-primario);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .stat-info h3 { font-size: 0.85rem; color: var(--texto-mutado); text-transform: uppercase; margin-bottom: 5px; }
+        .stat-info .number { font-size: 1.8rem; font-weight: bold; color: var(--azul-primario); }
+        .stat-icon { font-size: 2.2rem; color: #bbdefb; }
+
+        /* --- CAMBIO A DISEÑO HORIZONTAL --- */
+        .info-section {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* Tres columnas iguales en horizontal */
+            gap: 25px;
+        }
+
+        @media (max-width: 992px) { 
+            .info-section { 
+                grid-template-columns: 1fr; /* Responsivo: se apilan en pantallas pequeñas */
+            } 
+        }
+
+        .card {
+            background-color: var(--blanco);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            margin-bottom: 25px;
+            border: 1px solid #eef2f5;
+            height: 100%; /* Para que tengan la misma altura horizontalmente */
+        }
+
+        .card h2 {
+            color: var(--azul-primario);
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--azul-claro);
+            padding-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* --- TABLAS DE DATOS --- */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            background: var(--blanco);
+        }
+
+        .data-table th, .data-table td {
+            padding: 11px 14px;
+            text-align: left;
+            border-bottom: 1px solid var(--borde);
+        }
+
+        .data-table th {
+            background-color: var(--azul-claro);
+            color: var(--azul-primario);
+            font-weight: 600;
+        }
+
+        .data-table tr:hover { background-color: #fafdff; }
+
+        .badge {
+            background-color: #e3f2fd;
+            color: var(--azul-primario);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .badge-danger {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+
+        /* --- FORMULARIOS --- */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: var(--texto-oscuro);
+            font-size: 0.95rem;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            padding: 10px 14px;
+            border: 1px solid var(--borde);
+            border-radius: 6px;
+            font-size: 1rem;
+            outline: none;
+            transition: border 0.3s;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: var(--azul-primario);
+        }
+
+        .btn-submit {
+            background-color: var(--azul-primario);
+            color: var(--blanco);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--azul-oscuro);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-top">
+            <div class="avatar-iniciales">JCM</div> 
+            Colegio José Clemente Maurer
+        </div>
+        <nav>
+            <ul class="nav-bar">
+                <li><a onclick="switchView('inicio')" id="btn-inicio" class="active"><i class="fa-solid fa-house"></i> Inicio</a></li>
+                <li><a onclick="switchView('registro')" id="btn-registro"><i class="fa-solid fa-user-plus"></i> Registro</a></li>
+                <li><a onclick="switchView('estudiantes')" id="btn-estudiantes"><i class="fa-solid fa-graduation-cap"></i> Estudiantes</a></li>
+                <li><a onclick="switchView('kardex')" id="btn-kardex"><i class="fa-solid fa-file-invoice"></i> Kardex</a></li>
+                <li><a onclick="switchView('maestros')" id="btn-maestros"><i class="fa-solid fa-chalkboard-user"></i> Maestros</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+
+        <section id="inicio" class="view-section active-view">
+            <div class="welcome-banner">
+                <span class="banner-icon">🏫</span>
+                <h1>Bienvenido al Sistema Escolar</h1>
+                <p>
+                    Gestión académica integral para el colegio Jose Clemente Maurer de Azari.<br>
+                    Registro de estudiantes, control de notas y kardex academico completo.
+                </p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-info"><h3>Total Estudiantes</h3><div class="number" id="cont-total">4</div></div>
+                    <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-info"><h3>Varones</h3><div class="number" id="cont-varones">2</div></div>
+                    <div class="stat-icon"><i class="fa-solid fa-person" style="color:#2196f3;"></i></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-info"><h3>Mujeres</h3><div class="number" id="cont-mujeres">2</div></div>
+                    <div class="stat-icon"><i class="fa-solid fa-person-dress" style="color:#e91e63;"></i></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-info"><h3>Materias</h3><div class="number" id="cont-materias">14</div></div>
+                    <div class="stat-icon"><i class="fa-solid fa-book"></i></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-info"><h3>Maestros</h3><div class="number" id="cont-maestros">3</div></div>
+                    <div class="stat-icon"><i class="fa-solid fa-user-tie"></i></div>
+                </div>
+            </div>
+
+            <div class="info-section">
+                <div>
+                    <div class="card">
+                        <h2><i class="fa-solid fa-calendar-days"></i> Año Escolar 2026</h2>
+                        <p>Nos encontramos actualmente en el ciclo lectivo vigente. El calendario escolar avanza conforme a lo planificado, priorizando las evaluaciones continuas y el desarrollo educativo.</p>
+                    </div>
+                </div>
+                <div>
+                    <div class="card">
+                        <h2><i class="fa-solid fa-circle-info"></i> Información del Colegio</h2>
+                        <p>El Colegio José Clemente Maurer es una institución comprometida con la excelencia académica, la formación en valores y el desarrollo integral de nuestros estudiantes.</p>
+                    </div>
+                </div>
+                <div>
+                    <div class="card">
+                        <h2><i class="fa-solid fa-list-check"></i> Materias del Plan</h2>
+                        <table class="data-table">
+                            <thead><tr><th>Materia</th></tr></thead>
+                            <tbody>
+                                <tr><td>Matemáticas</td></tr>
+                                <tr><td>Lenguaje</td></tr>
+                                <tr><td>Física - Química</td></tr>
+                                <tr><td>Ciencias Sociales</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="registro" class="view-section">
+            <div class="card">
+                <h2><i class="fa-solid fa-user-plus"></i> Formulario de Registro Completo</h2>
+                <form onsubmit="event.preventDefault(); alert('¡Datos guardados con éxito simuladamente!');">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Nombres Completos</label>
+                            <input type="text" placeholder="Ej. Juan Carlos" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Apellidos</label>
+                            <input type="text" placeholder="Ej. Pérez Gómez" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Documento de Identidad (CI / DNI)</label>
+                            <input type="text" placeholder="Número de documento" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Fecha de Nacimiento</label>
+                            <input type="date" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Género</label>
+                            <select required>
+                                <option value="">Seleccione...</option>
+                                <option value="M">Masculino</option>
+                                <option value="F">Femenino</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Tipo de Registro</label>
+                            <select required>
+                                <option value="">Seleccione...</option>
+                                <option value="E">Estudiante</option>
+                                <option value="M">Maestro / Profesor</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Curso / Grado asignado</label>
+                            <input type="text" placeholder="Ej. 4to de Secundaria">
+                        </div>
+                        <div class="form-group">
+                            <label>Nombre del Tutor / Contacto de Emergencia</label>
+                            <input type="text" placeholder="Ej. María Gómez (Madre)">
+                        </div>
+                        <div class="form-group">
+                            <label>Teléfono de Contacto</label>
+                            <input type="tel" placeholder="Ej. 70012345" required>
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 20px;">
+                        <label>Dirección de Domicilio</label>
+                        <textarea rows="2" placeholder="Calle, Avenida, Zona..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit"><i class="fa-solid fa-floppy-disk"></i> Guardar Registro</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="estudiantes" class="view-section">
+            <div class="card">
+                <h2><i class="fa-solid fa-graduation-cap"></i> Listado de Estudiantes Registrados</h2>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>RUDE / ID</th>
+                            <th>Nombre Completo</th>
+                            <th>Género</th>
+                            <th>Curso / Grado</th>
+                            <th>Contacto Tutor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>EST-1021</td>
+                            <td>Carlos Mendoza Quispe</td>
+                            <td>Masculino</td>
+                            <td>6to de Secundaria</td>
+                            <td>71234567 (Padre)</td>
+                        </tr>
+                        <tr>
+                            <td>EST-1022</td>
+                            <td>Ana Sofía Rodríguez</td>
+                            <td>Femenino</td>
+                            <td>5to de Secundaria</td>
+                            <td>76543210 (Madre)</td>
+                        </tr>
+                        <tr>
+                            <td>EST-1023</td>
+                            <td>Mateo Arce Flores</td>
+                            <td>Masculino</td>
+                            <td>6to de Secundaria</td>
+                            <td>60011223 (Tía)</td>
+                        </tr>
+                        <tr>
+                            <td>EST-1024</td>
+                            <td>Lucía Fernández Paz</td>
+                            <td>Femenino</td>
+                            <td>4to de Secundaria</td>
+                            <td>72288991 (Padre)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="kardex" class="view-section">
+            <div class="card">
+                <h2><i class="fa-solid fa-file-invoice"></i> Registro de Incumplimiento y Conducta (Kardex)</h2>
+                
+                <form onsubmit="event.preventDefault(); alert('Reporte guardado en el Kardex institucional.');" style="margin-bottom: 35px; background: #fafafa; padding: 20px; border-radius: 8px; border: 1px dashed var(--azul-primario);">
+                    <h3 style="margin-bottom: 15px; font-size: 1.1rem; color: var(--azul-oscuro);">Anotar Nueva Falta / Observación</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Seleccionar Estudiante</label>
+                            <select required>
+                                <option value="">-- Buscar Estudiante --</option>
+                                <option>Carlos Mendoza Quispe (6to Sec)</option>
+                                <option>Ana Sofía Rodríguez (5to Sec)</option>
+                                <option>Mateo Arce Flores (6to Sec)</option>
+                                <option>Lucía Fernández Paz (4to Sec)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Fecha del Suceso</label>
+                            <input type="date" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Gravedad de la Falta</label>
+                            <select required>
+                                <option value="Leve">Leve (Atraso / Uniforme)</option>
+                                <option value="Moderada">Moderada (Indisciplina)</option>
+                                <option value="Grave">Grave (Falta de Respeto / Daño)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-top: 15px; margin-bottom: 15px;">
+                        <label>Descripción detallada del incumplimiento</label>
+                        <textarea rows="2" placeholder="Escriba aquí los detalles de lo sucedido..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit"><i class="fa-solid fa-gavel"></i> Registrar en Kardex</button>
+                </form>
+
+                <h3 style="margin-bottom: 10px; font-size: 1.2rem;">Historial Reciente de Reportes</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Estudiante</th>
+                            <th>Curso</th>
+                            <th>Falta / Observación</th>
+                            <th>Gravedad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>12/03/2026</td>
+                            <td>Carlos Mendoza Quispe</td>
+                            <td>6to de Secundaria</td>
+                            <td>Atraso injustificado y falta de uniforme completo.</td>
+                            <td><span class="badge">Leve</span></td>
+                        </tr>
+                        <tr>
+                            <td>18/03/2026</td>
+                            <td>Mateo Arce Flores</td>
+                            <td>6to de Secundaria</td>
+                            <td>Incumplimiento de tareas repetido en Física.</td>
+                            <td><span class="badge badge-danger">Moderada</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="maestros" class="view-section">
+            <div class="card">
+                <h2><i class="fa-solid fa-chalkboard-user"></i> Datos del Plantel Docente (Maestros)</h2>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Nombre Completo</th>
+                            <th>Especialidad / Materia</th>
+                            <th>Teléfono</th>
+                            <th>Correo Electrónico</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>DOC-01</td>
+                            <td>Prof. Ramiro Suárez Vargas</td>
+                            <td>Matemáticas y Cálculo</td>
+                            <td>70555123</td>
+                            <td>r.suarez@maurer.edu</td>
+                        </tr>
+                        <tr>
+                            <td>DOC-02</td>
+                            <td>Profa. Elena Ríos Montero</td>
+                            <td>Lenguaje y Literatura</td>
+                            <td>61244355</td>
+                            <td>e.rios@maurer.edu</td>
+                        </tr>
+                        <tr>
+                            <td>DOC-03</td>
+                            <td>Prof. Jorge Miranda Soliz</td>
+                            <td>Física - Química</td>
+                            <td>73399112</td>
+                            <td>j.miranda@maurer.edu</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        function switchView(viewId) {
+            const sections = document.querySelectorAll('.view-section');
+            sections.forEach(section => {
+                section.classList.remove('active-view');
+            });
+
+            const navLinks = document.querySelectorAll('.nav-bar a');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+
+            document.getElementById(viewId).classList.add('active-view');
+            document.getElementById('btn-' + viewId).classList.add('active');
+        }
+
+        // Ejemplo opcional por si necesitas cambiar los números por código:
+        // document.getElementById('cont-total').innerText = "150";
+    </script>
+
+</body>
+</html>

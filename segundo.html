@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MathSolver - 2.º Secundaria</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #071321;
+            color: white;
+            padding: 25px;
+        }
+
+        .volver {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid #00e0b0;
+            background: #0b1c2d;
+            color: white;
+            font-size: 25px;
+            cursor: pointer;
+        }
+
+        .encabezado {
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            font-size: 42px;
+            font-weight: bold;
+            letter-spacing: 3px;
+        }
+
+        .logo span {
+            color: #00aaff;
+        }
+
+        .encabezado h2 {
+            margin-top: 25px;
+            font-size: 30px;
+        }
+
+        .descripcion {
+            color: #91a8bb;
+            margin-top: 10px;
+        }
+
+        .linea {
+            width: 100px;
+            height: 4px;
+            background: #00e0b0;
+            border-radius: 10px;
+            margin: 18px auto;
+        }
+
+        .materias {
+            max-width: 1000px;
+            margin: auto;
+
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .materia {
+            min-height: 150px;
+            border-radius: 25px;
+            background: #122638;
+            border: 2px solid #00a98a;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            text-decoration: none;
+            color: white;
+
+            transition: 0.3s;
+        }
+
+        .materia:hover {
+            transform: translateY(-6px);
+            background: #17354d;
+            box-shadow: 0 0 20px rgba(0, 224, 176, 0.25);
+        }
+
+        .icono {
+            font-size: 42px;
+            margin-bottom: 12px;
+        }
+
+        .materia h3 {
+            font-size: 18px;
+            text-align: center;
+        }
+
+        @media (max-width: 800px) {
+            .materias {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 500px) {
+            .materias {
+                grid-template-columns: 1fr;
+            }
+
+            .logo {
+                font-size: 32px;
+            }
+
+            .encabezado {
+                margin-top: 70px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- VOLVER -->
+
+    <button class="volver" onclick="window.location.href='grados.html'">
+        ←
+    </button>
+
+
+    <!-- ENCABEZADO -->
+
+    <header class="encabezado">
+
+        <div class="logo">
+            MATH<span>SOLVER</span>
+        </div>
+
+        <div class="linea"></div>
+
+        <h2>2.º de Secundaria</h2>
+
+        <p class="descripcion">
+            Selecciona el tema que deseas estudiar
+        </p>
+
+    </header>
+
+
+    <!-- TEMAS -->
+
+    <main class="materias">
+
+        <a href="https://es.wikipedia.org/wiki/N%C3%BAmero_racional" class="materia">
+            <div class="icono">🔢</div>
+            <h3>Números racionales e irracionales</h3>
+        </a>
+
+        <a href="https://es.wikipedia.org/wiki/Potenciaci%C3%B3n" class="materia">
+            <div class="icono">√</div>
+            <h3>Potencias y raíces</h3>
+        </a>
+
+        <a href="https://es.wikipedia.org/wiki/Raz%C3%B3n_(matem%C3%A1tica)" class="materia">
+            <div class="icono">⚖️</div>
+            <h3>razones y proporciones</h3>
+        </a>
+
+        <a href="https://es.wikipedia.org/wiki/Regla_de_tres" class="materia">
+            <div class="icono">➗</div>
+            <h3>Regla de tres</h3>
+        </a>
+
+        <a href="https://es.wikipedia.org/wiki/Porcentaje" class="materia">
+            <div class="icono">%</div>
+            <h3>Porcentajes</h3>
+        </a>
+
+        <a href="https://en-wikipedia-org.translate.goog/wiki/Algebraic_expression?_x_tr_sl=en&_x_tr_tl=es&_x_tr_hl=es&_x_tr_pto=tc" class="materia">
+            <div class="icono">𝑥</div>
+            <h3>Expresiones algebraicas</h3>
+        </a>
+
+        <a href="https://es.wikipedia.org/wiki/Polinomio" class="materia">
+            <div class="icono">𝑥²</div>
+            <h3>Monomios y polinomios</h3>
+        </a>
+
+        <a href="https://es.wikipedia.org/wiki/Producto_notable" class="materia">
+            <div class="icono">✖️</div>
+            <h3>Productos notables básicos</h3>
+        </a>
+
+        <a href="https://es.wikipedia.org/wiki/Factorizaci%C3%B3n_de_polinomios" class="materia">
+            <div class="icono">🔢</div>
+            <h3>Factorización de polinomios</h3>
+        </a>
+
+        <a href="https://es.wikipedia.org/wiki/Sistema_de_ecuaciones" class="materia">
+            <div class="icono">＝</div>
+            <h3>Sistemas sencillos de ecuaciones</h3>
+        </a>
+
+        <a href="https://es.wikipedia.org/wiki/Plano_(geometr%C3%ADa)" class="materia">
+            <div class="icono">📐</div>
+            <h3>Geometría plana</h3>
+        </a>
+
+        <a href="https://es.wikipedia.org/wiki/Teorema_de_Pit%C3%A1goras" class="materia">
+            <div class="icono">△</div>
+            <h3>Teorema de Pitágoras</h3>
+        </a>
+
+        <a href="https://es.wikipedia.org/wiki/%C3%81rea" class="materia">
+            <div class="icono">📏</div>
+            <h3>Áreas y perímetros</h3>
+        </a>
+
+        <a href="https://es.wikipedia.org/wiki/Probabilidad" class="materia">
+            <div class="icono">📊</div>
+            <h3>Estadística y probabilidad</h3>
+        </a>
+
+    </main>
+
+</body>
+</html>

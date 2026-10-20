@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MathSolver - 3.º Secundaria</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #071321;
+            color: white;
+            padding: 25px;
+        }
+
+        .volver {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid #a855ff;
+            background: #0b1c2d;
+            color: white;
+            font-size: 25px;
+            cursor: pointer;
+        }
+
+        .encabezado {
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            font-size: 42px;
+            font-weight: bold;
+            letter-spacing: 3px;
+        }
+
+        .logo span {
+            color: #00aaff;
+        }
+
+        .encabezado h2 {
+            margin-top: 25px;
+            font-size: 30px;
+        }
+
+        .descripcion {
+            color: #91a8bb;
+            margin-top: 10px;
+        }
+
+        .linea {
+            width: 100px;
+            height: 4px;
+            background: #a855ff;
+            border-radius: 10px;
+            margin: 18px auto;
+        }
+
+        .materias {
+            max-width: 1000px;
+            margin: auto;
+
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .materia {
+            min-height: 150px;
+            border-radius: 25px;
+            background: #122638;
+            border: 2px solid #8d45d9;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            text-decoration: none;
+            color: white;
+
+            transition: 0.3s;
+        }
+
+        .materia:hover {
+            transform: translateY(-6px);
+            background: #17354d;
+            box-shadow: 0 0 20px rgba(168, 85, 255, 0.3);
+        }
+
+        .icono {
+            font-size: 42px;
+            margin-bottom: 12px;
+        }
+
+        .materia h3 {
+            font-size: 18px;
+            text-align: center;
+            padding: 0 10px;
+        }
+
+        @media (max-width: 800px) {
+            .materias {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 500px) {
+            .materias {
+                grid-template-columns: 1fr;
+            }
+
+            .logo {
+                font-size: 32px;
+            }
+
+            .encabezado {
+                margin-top: 70px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- BOTÓN VOLVER -->
+
+    <button class="volver" onclick="window.location.href='grados.html'">
+        ←
+    </button>
+
+
+    <!-- ENCABEZADO -->
+
+    <header class="encabezado">
+
+        <div class="logo">
+            MATH<span>SOLVER</span>
+        </div>
+
+        <div class="linea"></div>
+
+        <h2>3.º de Secundaria</h2>
+
+        <p class="descripcion">
+            Selecciona el tema que deseas estudiar
+        </p>
+
+    </header>
+
+
+    <!-- TEMAS DE TERCERO -->
+
+    <main class="materias">
+
+        <a href="https://es.wikipedia.org/wiki/N%C3%BAmero_real" class="materia">
+            <div class="icono">ℝ</div>
+            <h3>Números reales</h3>
+        </a>
+
+        <a href="https://es.wikipedia.org/wiki/Potenciaci%C3%B3n" class="materia">
+            <div class="icono">√</div>
+            <h3>Potenciación y radicación</h3>
+        </a>
+
+        <a href="https://es.wikipedia.org/wiki/Notaci%C3%B3n_cient%C3%ADfica" class="materia">
+            <div class="icono">10ⁿ</div>
+            <h3>Notación científica</h3>
+        </a>
+
+        <a href="https://es.wikipedia.org/wiki/Polinomio" class="materia">
+            <div class="icono">𝑥²</div>
+            <h3>Polinomios</h3>
+        </a>
+
+        <a href="https://es.wikipedia.org/wiki/Producto_notable" class="materia">
+            <div class="icono">✖️</div>
+            <h3>Productos notables</h3>
+        </a>
+
+        <a href="https://es.wikipedia.org/wiki/Factorizaci%C3%B3n" class="materia">
+            <div class="icono">🔢</div>
+            <h3>Factorización</h3>
+        </a>
+
+        <a href="https://en.wikipedia.org/wiki/Algebraic_fraction" class="materia">
+            <div class="icono">𝑥⁄𝑦</div>
+            <h3>Fracciones algebraicas</h3>
+        </a>
+
+        <a href="https://es.wikipedia.org/wiki/Ecuaci%C3%B3n_de_primer_grado" class="materia">
+            <div class="icono">𝑥 =</div>
+            <h3>Ecuaciones de primer y segundo grado</h3>
+        </a>
+
+        <a href="https://es.wikipedia.org/wiki/Sistema_de_ecuaciones" class="materia">
+            <div class="icono">＝</div>
+            <h3>Sistemas de ecuaciones</h3>
+        </a>
+
+        <a href="https://es.wikipedia.org/wiki/Funci%C3%B3n_(matem%C3%A1tica)" class="materia">
+            <div class="icono">ƒ(x)</div>
+            <h3>Funciones</h3>
+        </a>
+
+        <a href="https://es.wikipedia.org/wiki/Coordenadas_cartesianas" class="materia">
+            <div class="icono">📈</div>
+            <h3>Plano cartesiano</h3>
+        </a>
+
+        <a href="https://es.wikipedia.org/wiki/%C3%81ngulo" class="materia">
+            <div class="icono">📐</div>
+            <h3>Rectas y ángulos</h3>
+        </a>
+
+        <a href="https://es.wikipedia.org/wiki/Tri%C3%A1ngulo" class="materia">
+            <div class="icono">△</div>
+            <h3>Triángulos y semejanza</h3>
+        </a>
+
+        <a href="https://es.wikipedia.org/wiki/Circunferencia" class="materia">
+            <div class="icono">⭕</div>
+            <h3>Circunferencia</h3>
+        </a>
+
+        <a href="https://es.wikipedia.org/wiki/Estad%C3%ADstica_matem%C3%A1ticas" class="materia">
+            <div class="icono">📊</div>
+            <h3>Estadística</h3>
+        </a>
+
+    </main>
+
+</body>
+</html>
